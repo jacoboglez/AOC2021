@@ -39,11 +39,10 @@ def part1(input):
     return max(element_counts.values()) - min(element_counts.values())
 
 
-def part2_rec(input, n=40):
-    '''Good enough for the test but too slow for my input.'''
+def part2(input, n=40):
     polymer_template, insertion_rules = input
 
-    @lru_cache
+    @lru_cache(maxsize=None)
     def rec(a,b, nn):
         if (a+b in insertion_rules) and nn:
             a_down = rec(a, insertion_rules[a+b], nn-1)
@@ -52,7 +51,6 @@ def part2_rec(input, n=40):
         else:
             return Counter([a])
 
-
     total_counter = Counter()
     for a,b in zip(polymer_template[:-1], polymer_template[1:]):
         total_counter += rec(a,b,n)
@@ -60,11 +58,10 @@ def part2_rec(input, n=40):
     # Add the last element
     total_counter += Counter(polymer_template[-1])
 
-    print(f'{total_counter=}')
     return max(total_counter.values()) - min(total_counter.values())
     
 
-def part2(input, n=40):
+def part2_count(input, n=40):
     polymer_template, insertion_rules = input
 
     couples = defaultdict(int)
