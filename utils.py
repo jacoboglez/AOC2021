@@ -75,9 +75,14 @@ def test(DAY, parser, part1=lambda x:None, results_part_1=[], part2=lambda x:Non
 
 # Graphs
 
+def mod1(i, n):
+    '''Returns the modulo of a number but starting at 1, not 0.'''
+    return (i - 1) % n + 1
+
+
 def addc(a, b):
     ''' Add two coordinates by components, or a coordinate and a scalar'''
-    if isinstance(b, tuple):
+    if isinstance(b, tuple) or isinstance(b, list):
         return (a[0]+b[0], a[1]+b[1])
     elif isinstance(b, int):
         return (a[0]+b, a[1]+b)
